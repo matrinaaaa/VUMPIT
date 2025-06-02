@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add User - VUMP IT</title>
+  <link rel="stylesheet" href="add_user.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="container" role="main" aria-label="Add New User Form">
+    <header class="header">
+      <div class="logo">
+        <img src="elements/elements/INTERFACE 0 - GENERAL ELEMENTS/LOGO.png" alt="Logo" class="logo-img" />
+      </div>
+      <a href="admin_main.html" class="back-btn" role="button" aria-label="Go back to admin main page">← Back</a>
+    </header>
+
+    <h1 class="page-title"><strong>ADD NEW USER</strong></h1>
+
+    <form id="addUserForm" novalidate>
+      <div class="form-group">
+        <label for="userId">User ID</label>
+        <input type="text" id="userId" name="userId" placeholder="Enter User ID" required aria-required="true" />
+      </div>
+
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter Full Name" required aria-required="true" />
+      </div>
+
+      <div class="form-group">
+        <label for="sport">Sport</label>
+        <input type="text" id="sport" name="sport" placeholder="Enter Sport" required aria-required="true" />
+      </div>
+
+      <div class="form-group">
+        <label for="userType">User Type</label>
+        <select id="userType" name="userType" required aria-required="true">
+          <option value="" disabled selected>Select User Type</option>
+          <option value="Athlete">Athlete</option>
+          <option value="Coach">Coach</option>
+          <option value="Student">Student</option>
+          <option value="Instructor">Instructor</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="college">College</label>
+        <select id="college" name="college" required aria-required="true">
+          <option value="" disabled selected>Select College</option>
+          <option value="College of Administration, Business, Hospitality and Accountancy">College of Administration, Business, Hospitality and Accountancy</option>
+          <option value="College of Agriculture">College of Agriculture</option>
+          <option value="College of Allied Medicine">College of Allied Medicine</option>
+          <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+          <option value="College of Engineering">College of Engineering</option>
+          <option value="College of Industrial Technology">College of Industrial Technology</option>
+          <option value="College of Teacher Education">College of Teacher Education</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="course">Course</label>
+        <select id="course" name="course" required aria-required="true" disabled>
+          <option value="" disabled selected>Select Course</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="year">Year</label>
+        <select id="year" name="year" required aria-required="true">
+          <option value="" disabled selected>Select Year</option>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+          <option value="V">V</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="section">Section</label>
+        <input type="text" id="section" name="section" placeholder="Enter Section" required aria-required="true" />
+      </div>
+
+      <div class="action-buttons">
+        <button type="submit" class="confirm-btn" id="submitBtn">Add User</button>
+        <button type="reset" class="cancel-btn">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="modalOverlay" role="alertdialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" style="display:none;">
+    <div id="modal" tabindex="-1">
+      <h2 id="modalTitle">Message</h2>
+      <p id="modalDesc"></p>
+      <button id="modalCloseBtn" aria-label="Close message">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const collegeToCourses = {
+      "College of Administration, Business, Hospitality and Accountancy": [
+        "Bachelor of Science in Accountancy",
+        "Bachelor of Science in Business Administration - Financial Management",
+        "Bachelor of Science in Business Administration - Marketing Management",
+        "Bachelor of Science in Business Administration - Human Resource Management",
+        "Bachelor of Public Administration",
+        "Bachelor of Science in Hospitality Management"
+      ],
+      "College of Agriculture": [
+        "Bachelor of Science in Agriculture - Animal Science",
+        "Bachelor of Science in Agriculture - Crop Science",
+        "Bachelor of Science in Agriculture - Organic Agriculture",
+        "Bachelor of Science in Environmental Science",
+        "Bachelor of Science in Forestry"
+      ],
+      "College of Allied Medicine": [
+        "Bachelor of Science in Nursing",
+        "Bachelor of Science in Radiologic Technology",
+        "Diploma in Midwifery"
+      ],
+      "College of Arts and Sciences": [
+        "Bachelor of Arts in Communication",
+        "Bachelor of Arts in History",
+        "Bachelor of Arts in Psychology",
+        "Bachelor of Science in Biology",
+        "Bachelor of Science in Mathematics"
+      ],
+      "College of Engineering": [
+        "Bachelor of Science in Civil Engineering",
+        "Bachelor of Science in Computer Engineering",
+        "Bachelor of Science in Electrical Engineering",
+        "Bachelor of Science in Electronics Engineering",
+        "Bachelor of Science in Industrial Engineering",
+        "Bachelor of Science in Mechanical Engineering"
+      ],
+      "College of Industrial Technology": [
+        "Bachelor of Science in Industrial Technology - Automotive Technology",
+        "Bachelor of Science in Industrial Technology - Computer Technology",
+        "Bachelor of Science in Industrial Technology - Electrical Technology",
+        "Bachelor of Science in Industrial Technology - Electronics Technology",
+        "Bachelor of Science in Industrial Technology - Food Technology",
+        "Bachelor of Science in Industrial Technology - Garments Technology",
+        "Bachelor of Science in Industrial Technology - Industrial Design Technology",
+        "Bachelor of Science in Industrial Technology - Mechanical Technology",
+        "Bachelor of Science in Information Technology"
+      ],
+      "College of Teacher Education": [
+        "Bachelor of Elementary Education",
+        "Bachelor of Culture and Arts Education",
+        "Bachelor of Secondary Education - English",
+        "Bachelor of Secondary Education - Filipino",
+        "Bachelor of Secondary Education - Mathematics",
+        "Bachelor of Secondary Education - Sciences",
+        "Bachelor of Secondary Education - Social Studies",
+        "Bachelor of Technical Livelihood Education - Home Economics",
+        "Bachelor of Technical Livelihood Education - Information and Communication Technology",
+        "Bachelor of Technical Livelihood Education - Industrial Arts",
+        "Bachelor of Science in Exercise and Sports Science"
+      ]
+    };
+
+    const collegeSelect = document.getElementById('college');
+    const courseSelect = document.getElementById('course');
+
+    collegeSelect.addEventListener('change', () => {
+      const selectedCollege = collegeSelect.value;
+      console.log('Selected college:', selectedCollege);  // Debug log
+
+      // Reset course options
+      courseSelect.innerHTML = '<option value="" disabled selected>Select Course</option>';
+
+      if (selectedCollege && collegeToCourses[selectedCollege]) {
+        collegeToCourses[selectedCollege].forEach(course => {
+          const option = document.createElement('option');
+          option.value = course;
+          option.textContent = course;
+          courseSelect.appendChild(option);
+        });
+        courseSelect.disabled = false; // Enable course select
+      } else {
+        courseSelect.disabled = true;
+      }
+    });
+
+    // Disable course select initially
+    courseSelect.disabled = true;
+
+    // Disable course and clear on form reset
+    const form = document.getElementById('addUserForm');
+    form.addEventListener('reset', () => {
+      courseSelect.innerHTML = '<option value="" disabled selected>Select Course</option>';
+      courseSelect.disabled = true;
+    });
+
+    // Modal and form validation code...
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showModal(title, message) {
+      modalTitle.textContent = title;
+      modalDesc.textContent = message;
+      modalOverlay.style.display = 'flex';
+      modalCloseBtn.focus();
+    }
+
+    function hideModal() {
+      modalOverlay.style.display = 'none';
+      submitBtn.focus();
+    }
+
+    modalCloseBtn.addEventListener('click', () => {
+      hideModal();
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        hideModal();
+      }
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+
+      const elements = Array.from(form.elements).filter(el => el.hasAttribute('required'));
+      let firstInvalid = null;
+      let errors = [];
+
+      elements.forEach(el => {
+        if (!el.value.trim()) {
+          errors.push(`${el.previousElementSibling.textContent} is required.`);
+          if (!firstInvalid) firstInvalid = el;
+          el.classList.add('invalid');
+        } else {
+          el.classList.remove('invalid');
+        }
+      });
+
+      if (errors.length > 0) {
+        showModal('Validation Error', errors[0]);
+        if (firstInvalid) firstInvalid.focus();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add User';
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      console.log('Add User Data:', data);
+
+      setTimeout(() => {
+        showModal('Success', 'User added successfully!');
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add User';
+      }, 800);
+    });
+
+    form.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('input', () => {
+        if (input.classList.contains('invalid') && input.value.trim()) {
+          input.classList.remove('invalid');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

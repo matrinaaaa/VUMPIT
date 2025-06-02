@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="maxwidth=1024, maxheight=600, user-scalable=no" />
+  <title>Admin - VUMP IT</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Modal for "Please select one" warning */
+    #select-warning-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+    #select-warning-modal.active {
+      display: flex;
+    }
+    #select-warning-modal .modal-content {
+      background: white;
+      padding: 24px 32px;
+      border-radius: 10px;
+      max-width: 320px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #222;
+    }
+    #select-warning-modal h2 {
+      margin: 0 0 12px;
+      font-size: 1.5rem;
+    }
+    #select-warning-modal p {
+      margin: 0 0 20px;
+      font-size: 1.1rem;
+    }
+    #select-warning-modal button {
+      background-color: #0078d4;
+      border: none;
+      color: white;
+      padding: 10px 28px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    #select-warning-modal button:hover,
+    #select-warning-modal button:focus {
+      background-color: #005a9e;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <img src="elements/elements/INTERFACE 0 - GENERAL ELEMENTS/LOGO.png" alt="Logo" class="logo-img" />
+    </div>
+    <div class="menu-icon">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- Popup Menu -->
+  <div id="menu-popup" class="menu-popup hidden">
+    <button class="popup-btn">
+      <img src="elements/ADD USER BT.png" class="btn-icon" alt="Add User Icon" />
+      <span>Add User</span>
+    </button>
+    <button class="popup-btn">
+      <img src="elements/DELETE USER BT.png" class="btn-icon" alt="Delete User Icon" />
+      <span>Delete User</span>
+    </button>
+    <button class="popup-btn">
+      <img src="elements/SYSTEM MAINTENANCE BT.png" class="btn-icon" alt="System Maintenance Icon" />
+      <span>System Maintenance</span>
+    </button>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay">
+    <div class="text-block">
+      <h1>Welcome <strong>ADMIN</strong></h1>
+      <p class="subtitle"><strong>LOCATE USER PROFILE</strong></p>
+    </div>
+
+    <div class="search-refresh-wrapper">
+      <div class="search-bar-custom">
+        <input type="text" id="searchInput" placeholder="Enter user ID, name, sport, user type, etc." />
+        <img src="elements/elements/INTERFACE 0 - GENERAL ELEMENTS/SEARCH ICON.png" alt="Search" class="search-icon" />
+      </div>
+      <button class="refresh-btn-inline" onclick="refreshTable()">REFRESH</button>
+    </div>
+
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40px;"></th>
+            <th>USER ID</th>
+            <th>NAME</th>
+            <th class="sortable" data-key="sport">SPORT <span class="sort-icon" id="icon-sport">↕</span></th>
+            <th class="sortable" data-key="user_type">USER TYPE <span class="sort-icon" id="icon-user_type">↕</span></th>
+            <th class="sortable" data-key="department">DEPARTMENT <span class="sort-icon" id="icon-department">↕</span></th>
+            <th class="sortable" data-key="course">COURSE <span class="sort-icon" id="icon-course">↕</span></th>
+            <th class="sortable" data-key="year">YEAR <span class="sort-icon" id="icon-year">↕</span></th>
+            <th class="sortable" data-key="section">SECTION <span class="sort-icon" id="icon-section">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="data-body">
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000001</td><td>Jane Doe</td><td>Volleyball</td><td>Athlete</td><td>CEN</td><td>BS CPE</td><td>IV</td><td>AA</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000002</td><td>John Smith</td><td>Basketball</td><td>Coach</td><td>CAS</td><td>BS IT</td><td>III</td><td>BB</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000003</td><td>Emily Clark</td><td>Football</td><td>Student</td><td>CBA</td><td>BSBA</td><td>II</td><td>CC</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000004</td><td>Chris Evans</td><td>Swimming</td><td>Instructor</td><td>CTE</td><td>BSE</td><td>I</td><td>DD</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000005</td><td>Sam Wilson</td><td>Baseball</td><td>Athlete</td><td>CEN</td><td>BS ME</td><td>IV</td><td>EE</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000006</td><td>Peter Parker</td><td>Track</td><td>Student</td><td>CAS</td><td>BS BIO</td><td>II</td><td>FF</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000007</td><td>Tony Stark</td><td>Robotics</td><td>Admin</td><td>CEAT</td><td>BS ECE</td><td>IV</td><td>GG</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" class="row-checkbox" style="display:none;"></td>
+            <td>00000008</td><td>Bruce Wayne</td><td>Martial Arts</td><td>Coach</td><td>CEN</td><td>BS CE</td><td>III</td><td>HH</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="action-buttons">
+      <a href="index.html" id="back-btn" class="back-btn" role="button" tabindex="0">BACK</a>
+      <button id="confirm-btn" class="confirm-btn" style="display:none;">CONFIRM</button>
+      <button id="cancel-btn" class="cancel-btn" style="display:none;">CANCEL</button>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc" style="display:none;">
+    <div class="modal-content">
+      <h2 id="modal-title">Confirm Deletion</h2>
+      <div class="user-list" id="user-list">
+        <!-- Dynamically filled -->
+      </div>
+      <div class="modal-buttons">
+        <button class="btn-confirm" id="modal-confirm-btn">Confirm</button>
+        <button class="btn-cancel" id="modal-cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Selected user(s) deleted.</div>
+
+  <!-- Select warning modal -->
+  <div id="select-warning-modal" role="alertdialog" aria-modal="true" aria-labelledby="select-warning-title" aria-describedby="select-warning-desc">
+    <div class="modal-content">
+      <h2 id="select-warning-title">Selection Required</h2>
+      <p id="select-warning-desc">Please select one before confirming.</p>
+      <button id="select-warning-close-btn" aria-label="Close popup">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const menuIcon = document.querySelector('.menu-icon');
+    const menuPopup = document.getElementById('menu-popup');
+
+    menuIcon.addEventListener('click', () => {
+      menuPopup.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuIcon.contains(e.target) && !menuPopup.contains(e.target)) {
+        menuPopup.classList.add('hidden');
+      }
+    });
+
+    const tbody = document.getElementById('data-body');
+    const searchInput = document.getElementById('searchInput');
+    let currentSort = { key: '', asc: true };
+
+    function refreshTable() {
+      searchInput.value = '';
+      const tableBox = document.querySelector('.table-box');
+      if (tableBox) tableBox.scrollTop = 0;
+      document.querySelectorAll('#data-body tr').forEach(row => row.style.display = '');
+      if (tbody) tbody.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    document.querySelectorAll('th.sortable').forEach(header => {
+      header.addEventListener('click', () => {
+        const key = header.getAttribute('data-key');
+        const icon = document.getElementById(`icon-${key}`);
+        document.querySelectorAll('.sort-icon').forEach(i => i.textContent = '↕');
+        currentSort.asc = (currentSort.key === key) ? !currentSort.asc : true;
+        currentSort.key = key;
+        icon.textContent = currentSort.asc ? '↑' : '↓';
+
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        rows.sort((a, b) => {
+          const aVal = a.querySelector(`td:nth-child(${header.cellIndex + 1})`).innerText.toLowerCase();
+          const bVal = b.querySelector(`td:nth-child(${header.cellIndex + 1})`).innerText.toLowerCase();
+          if (aVal < bVal) return currentSort.asc ? -1 : 1;
+          if (aVal > bVal) return currentSort.asc ? 1 : -1;
+          return 0;
+        });
+
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
+      });
+    });
+
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.toLowerCase();
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.forEach(row => {
+        const match = Array.from(row.children).some(td => td.innerText.toLowerCase().includes(term));
+        row.style.display = match ? '' : 'none';
+      });
+    });
+
+    const popupButtons = menuPopup.querySelectorAll('.popup-btn');
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+
+    const backBtn = document.getElementById('back-btn');
+    const confirmBtn = document.getElementById('confirm-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+
+    const confirmModal = document.getElementById('confirm-modal');
+    const userList = document.getElementById('user-list');
+    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+
+    const toast = document.getElementById('toast');
+
+    // Select warning modal elements
+    const selectWarningModal = document.getElementById('select-warning-modal');
+    const selectWarningCloseBtn = document.getElementById('select-warning-close-btn');
+
+    function resetDeleteMode() {
+      checkboxes.forEach(cb => {
+        cb.style.display = 'none';
+        cb.checked = false;
+      });
+      backBtn.style.display = 'inline-block';
+      confirmBtn.style.display = 'none';
+      cancelBtn.style.display = 'none';
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    popupButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        menuPopup.classList.add('hidden');
+
+        const text = btn.textContent.trim();
+
+        if (text === 'Add User') {
+          // Redirect to add_user.html
+          window.location.href = 'add_user.html';
+          return;
+        }
+
+        if (text === 'Delete User') {
+          checkboxes.forEach(cb => cb.style.display = 'inline-block');
+          backBtn.style.display = 'none';
+          confirmBtn.style.display = 'inline-block';
+          cancelBtn.style.display = 'inline-block';
+        } else {
+          resetDeleteMode();
+        }
+      });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      resetDeleteMode();
+    });
+
+    confirmBtn.addEventListener('click', () => {
+      const selectedRows = Array.from(checkboxes)
+        .map((cb, idx) => cb.checked ? tbody.rows[idx] : null)
+        .filter(row => row !== null);
+
+      if (selectedRows.length === 0) {
+        // Show custom modal instead of alert
+        selectWarningModal.classList.add('active');
+        selectWarningCloseBtn.focus();
+        return;
+      }
+
+      userList.innerHTML = '';
+      selectedRows.forEach(row => {
+        const userId = row.cells[1].innerText;
+        const userName = row.cells[2].innerText;
+        const p = document.createElement('p');
+        p.textContent = `${userId} - ${userName}`;
+        userList.appendChild(p);
+      });
+
+      confirmModal.style.display = 'flex';
+    });
+
+    modalCancelBtn.addEventListener('click', () => {
+      confirmModal.style.display = 'none';
+    });
+
+    modalConfirmBtn.addEventListener('click', () => {
+      const selectedRows = Array.from(checkboxes)
+        .map((cb, idx) => cb.checked ? tbody.rows[idx] : null)
+        .filter(row => row !== null);
+
+      selectedRows.forEach(row => tbody.removeChild(row));
+
+      confirmModal.style.display = 'none';
+      resetDeleteMode();
+      showToast('Selected user(s) deleted.');
+    });
+
+    confirmModal.addEventListener('click', (e) => {
+      if (e.target === confirmModal) {
+        confirmModal.style.display = 'none';
+      }
+    });
+
+    // Close select warning modal
+    selectWarningCloseBtn.addEventListener('click', () => {
+      selectWarningModal.classList.remove('active');
+    });
+
+    // Close select warning modal when clicking outside modal content
+    selectWarningModal.addEventListener('click', (e) => {
+      if (e.target === selectWarningModal) {
+        selectWarningModal.classList.remove('active');
+      }
+    });
+
+    // Defensive hide on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      confirmModal.style.display = 'none';
+      selectWarningModal.classList.remove('active');
+    });
+  </script>
+</body>
+</html>

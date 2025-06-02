@@ -1,0 +1,349 @@
+<?php
+    include 'connect.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SearchFile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .row.content {
+      min-height: 100vh; /* Ensure full height */
+    }
+    
+    .sidenav {
+      background-color: #FFA63D;
+      height: 80vh;
+      position: -webkit-sticky; /* For Safari */
+      position: sticky;
+      top: 0;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .mainCont {
+      top: 5px;
+      left: 5px;
+      justify-content: center;
+      position: relative; 
+      overflow-y: auto; /* Enable vertical scroll */
+      max-height: calc(100vh - 150px); /* Adjust based on your layout */
+      padding: 20px; /* Add padding for better appearance */
+      border: 1px solid #ccc; /* Optional: Add border for panel */
+      border-radius: 3px; /* Optional: Add border radius for panel */
+      background-color: #f9f9f9; /* Optional: Add background color for panel */
+    }
+
+    .btn-footer {
+      background-color: #FFCC99; /* Light orange color */
+      width: 100%;
+      height: auto;
+      border: none;
+      padding: 10px 0;
+      text-align: center;
+      color: #333; /* Darker text for contrast */
+      font-weight: bold;
+      border-radius: 4px; /* Optional: Add rounded corners */
+    }
+
+    .btn-footer:hover {
+      background-color: #FFB366; /* Slightly darker shade for hover effect */
+    }
+
+    @media screen and (max-width: 600px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {
+        height: auto;
+      }
+    }
+    
+    header {
+      background-color: #1410eb;
+      height: 20%;
+      width: 100%;
+      text-align: left;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      position: relative;
+    }
+
+    .header-text {
+      margin-left: 200px; /* Adjust margin as needed */
+      color: white; /* Set text color to white */
+      text-align: left; /* Left align text */
+      font-weight: bold; /* Set font weight */
+      text-shadow: 2px 2px 4px black; /* Add black shadow */
+      
+    }
+    
+    .header-text p{
+      font-size: 45px;
+    }
+
+    .header-text h6 {
+      font-size: 18px; /* Adjust font size as needed */
+      margin: 0; 
+      line-height: 0.0; 
+    }
+    .logo2 {
+      position: absolute;
+      left: 50px;
+      top: 15px;
+      height: 100%;
+      width: auto;
+      max-height: 80%;
+      max-width: 80%;
+    }
+
+    .sidenav button {
+      display: block;
+      margin: 20px auto;
+    }
+    
+    input[type="text"], select {
+      width: 100%;
+      padding: 5px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    h1 {
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .container {
+      position: relative;
+      background-color: rgba(0, 0, 128, 0.22);
+    }
+    .mainCont .col-sm-6 {
+      padding-left: 10px;
+     
+    }
+    #right{
+      padding-right: 20px;
+    }
+
+    .open-button {
+    background-image: url('menu_logo.png');
+    background-size: 100% 100%; /* Ensure the image covers the button */
+    background-position: center; /* Center the image */
+    color: rgb(248, 246, 246);
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 50px;
+    height: 50px; /* Adjust height to suit your image */
+    font-size: 20px;
+    border-radius: 12px; 
+    text-align: center; /* Center text if you use any */
+    line-height: 50px; /* Center text vertically */
+}
+  
+
+    .form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0 ;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+  }
+  
+ 
+  .form-container {
+    max-width: 120px;
+    padding: 10px;
+    background-color: #f0ebeb;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: fit-content  ;
+    color:#f2f2f2;
+    font-size: small;
+  }
+
+  
+
+  .form-container .btn {
+    background-color: darkolivegreen;
+    color: white;
+    padding: 5px 5px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+  }
+  
+ 
+  .form-container .cancel {
+    background-color: darkred;
+  }
+  
+  
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+
+    
+  </style>
+</head>
+<body>
+
+  <header class="container-fluid">
+    <img src="sb_logo.png" alt="Logo" class="logo2">
+    <div class="header-text">
+      <p>OFFICE OF THE SANGGUNIANG BAYAN</p>
+      <h6>ORDINANCE AND RESOLUTION</h6>
+    </div>
+  </header>
+
+    
+   
+
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-2 sidenav">
+        <h1>SEARCH</h1>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+
+          <label for="first-select">Document Type</label>
+          <select id="first-select">
+              <option value="ordinance">Ordinance</option>
+              <option value="resolution">Resolution</option>
+          </select><br><br>
+          <p><b>Document Year</b><br>
+          <input type="text" name="year" placeholder="Enter Year"><br><br>
+            
+          
+          <div id="additional-options" class="hidden">
+            <p><b>Resolution Details</b><br>
+              <input type="text" name="res_num" placeholder="Enter Resolution Number"><br>
+              <input type="text" name="res_title" placeholder="Enter Resolution Title"><br><br>
+          </div>
+      
+          <script>
+              document.getElementById('first-select').addEventListener('change', function() {
+                  var additionalOptions = document.getElementById('additional-options');
+                  if (this.value === 'resolution') {
+                      additionalOptions.classList.remove('hidden');
+                  } else {
+                      additionalOptions.classList.add('hidden');
+                  }
+              });
+          </script>
+      
+          <button name="find" type="button" class="btn btn-primary" >Find</button>
+        
+          
+          </form>
+        
+      </div>
+
+      <div class="col-sm-10 mainCont">
+        <div class="row">
+          <div class="col-sm-6" name="left">
+            <div class="panel panel-default">
+              <div class="panel-heading">Document Preview </div>
+              <div class="panel-body">
+                <!-- Left Content -->
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6" name="right">
+            <div class="panel panel-default">
+              <div class="panel-heading">Document Preview </div>
+              <div class="panel-body">
+                <!-- Right Content -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form_bottom">
+      <button class="open-button" onclick="openForm()"></button>
+      <div class="form-popup" id="myForm">
+      <form class="form-container" method="post">
+          <button class="btn" href="">ADD</button>
+          <button class="btn" href="">EDIT</button>
+      </form>
+      </div>
+   </div>
+
+  </div>
+
+   
+
+  <footer class="container-fluid">
+    Footer Content
+  </footer>
+
+  <script>
+    function fetchData() {
+      // Your fetch data function here
+    }
+    
+    function openForm() {
+    document.getElementById("myForm").style.display = "block";
+    }
+
+   
+    window.onclick = function(event) {
+      var formPopup = document.getElementById("myForm");
+      if (event.target != formPopup && !formPopup.contains(event.target) && event.target != document.querySelector(".open-button")) {
+        formPopup.style.display = "none";
+      }
+    }
+  </script>
+
+<?php
+if(isset($_POST['find'])){
+    $year=$_POST['year'];
+    $res_num=$_POST['res_num'];
+    $res_title=$_POST['res_title'];
+
+    $result=mysqli_query($con, "Select * from sb where date like '%$year%' and resnum like '%$res_num%' and title like '%$res_title%'");
+
+    if($result){
+        if(mysqli_num_rows($result)>0){
+            while($row=mysqli_fetch_assoc($result)){
+                echo '<div class="original">
+                        <iframe src="origpic/'.$row['origpic'].'"></iframe>
+                    </div>
+                    <div class="scanned">
+                        <iframe src="scanpic/'.$row['scanpic'].'"></iframe>
+                    </div>
+                    ';
+            }
+        }else{
+            echo '<h2 class="text-danger">Data Not Found</h2>';
+        }
+    }
+}
+?>
+
+</body>
+</html>

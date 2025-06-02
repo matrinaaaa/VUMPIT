@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no">
+  <title>VUMP IT</title>
+  <link rel="stylesheet" href="indexstyle.css" />
+</head>
+<body>
+  
+<!-- Popup Menu (Hidden by Default) -->
+<div id="menu-popup" class="menu-popup hidden">
+  <button class="popup-btn" onclick="location.href='admin_main.html'">System Admin</button>
+  <button class="popup-btn">About Us</button>
+</div>
+
+<!-- Background Video -->
+<video autoplay muted loop id="bg-video">
+  <source src="assets/background3.mp4" type="video/mp4" />
+  Your browser does not support HTML5 video.
+</video>
+
+<!-- Dark overlay -->
+<div class="overlay"></div>
+
+<!-- Main Content -->
+<div class="content">
+  <div class="menu-icon">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <div class="container">
+    <div class="left">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" />
+      </div>
+      <h1>Welcome!</h1>
+      <div class="line"></div>
+      <p class="description">
+        The ultimate high-tech sports measurement system designed to track and analyze your vertical jump performance. Built with precision and innovation, VUMPIT combines Vertical Momentum, Performance, Intensity, and Training to give athletes real-time insights into their explosive power.
+      </p>
+    </div>
+
+    <div class="right">
+      <div class="rfid-box">
+        <h2>TAP RFID</h2>
+        <small>above</small>
+        <img src="assets/rfid-icon.png" alt="RFID Icon" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Load JS here after everything is defined -->
+<script src="menu-toggle.js"></script>
+</body>
+</html>

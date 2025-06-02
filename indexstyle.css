@@ -1,0 +1,226 @@
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 1024px;
+  height: 600px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fullscreen background video (fixed size) */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1024px;
+  height: 600px;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Overlay for dark contrast */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1024px;
+  height: 600px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+/* Wrapper for all UI elements */
+.content {
+  width: 1024px;
+  height: 600px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Menu icon */
+.menu-icon {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.menu-icon div {
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  margin: 6px 0;
+  border-radius: 2px;
+}
+
+/* Main container layout */
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Left content */
+.left {
+  width: 620px;
+}
+
+.logo {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 3;
+}
+
+
+.logo img {
+  width: 171px;
+  height: 81px;
+}
+
+h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.line {
+  width: 50px;
+  height: 2px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: justify; /* ✅ Add this line */
+}
+
+
+/* Right RFID box */
+.right {
+  width: 340px;
+  display: flex;
+  justify-content: center;
+}
+
+.rfid-box {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  width: 280px;
+}
+
+.rfid-box h2 {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.rfid-box small {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.rfid-box img {
+  width: 200px; /* ⬅️ increase from 140px to 200px or more */
+  height: auto;
+}
+
+
+/* Disable responsiveness */
+@media screen and (max-width: 1024px), (max-height: 600px) {
+  html, body, .content {
+    transform: scale(1);
+    overflow: hidden;
+  }
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
+  z-index: 3;
+}
+
+.side-nav a {
+  color: white;
+  text-decoration: none;
+  margin: 15px 0;
+  font-size: 20px;
+}
+
+.side-nav.show {
+  transform: translateX(0);
+}
+
+.menu-popup {
+  position: absolute;
+  top: 80px;
+  right: 40px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.menu-popup.hidden {
+  display: none;
+}
+
+.popup-btn {
+  background-color: #f15a29;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.popup-btn:hover {
+  background-color: #e04a1f;
+}
+
+.arrow-gif {
+  width: 60px;
+  margin-bottom: -10px;
+  position: relative;
+  top: 20px;
+  z-index: 3;
+}
+

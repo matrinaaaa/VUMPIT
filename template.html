@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=600, user-scalable=no">
+  <title>VUMP IT</title>
+  <link rel="stylesheet" href="templatestyle.css" />
+</head>
+<body>
+
+<!-- Popup Menu -->
+<div id="menu-popup" class="menu-popup hidden">
+  <button class="popup-btn">
+    <img src="assets/adminicon.png" class="btn-icon" alt="Admin Icon" />
+    System Admin
+  </button>
+  <button class="popup-btn">
+    <img src="assets/aboutusicon.png" class="btn-icon" alt="About Icon" />
+    About Us
+  </button>
+</div>
+
+
+<!-- Logo -->
+<div class="logo">
+  <img src="assets/logo.png" alt="Logo" />
+</div>
+
+<!-- Menu Icon -->
+<div class="menu-icon">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<script>
+  const menuIcon = document.querySelector('.menu-icon');
+  const menuPopup = document.querySelector('.menu-popup');
+
+  menuIcon.addEventListener('click', () => {
+    menuIcon.classList.toggle('active');
+    menuPopup.classList.toggle('hidden');
+  });
+</script>
+<!-- JS for menu toggle -->
+<script src="menu-toggle.js"></script>
+
+
+<!-- Profile Tab -->
+<div class="profile-tab">
+  <span>RECOMMENDATIONS</span>
+</div>
+
+
+
+
+</body>
+</html>
